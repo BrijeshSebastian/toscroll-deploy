@@ -87,6 +87,19 @@ router.get('/me', verifyToken, async (req, res) => {
 });
 
 
+router.get('/admin', verifyToken, async (req, res) => {
+  try {
+    const admin = await User.findOne({ role: 'admin' }).select('_id name');
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.json(admin);
+  } catch (err) {
+    console.error('Error fetching admin:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Delete user by ID (Admin only)
 router.delete('/delete-user/:id', verifyToken, requireRole('admin'), async (req, res) => {
   try {

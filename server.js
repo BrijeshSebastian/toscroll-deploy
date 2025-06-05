@@ -2,10 +2,9 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Message = require('./models/Message');
-const path = require('path')
+const path = require('path');
+const mongoose = require('mongoose');
 
 dotenv.config();
 
@@ -13,32 +12,33 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // Allow all origins for testing
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 app.use('/toscroll-backend/public', express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
 
-
-// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Routes
 const authRoutes = require('./routes/authRoutes');
-app.use('/api/auth', authRoutes);
-const messageRoutes = require('./routes/messageRoutes');
-app.use('/api/messages', messageRoutes);
+const messageRoutes = require('./routes/messageRoutes')(io); // Pass io to messageRoutes
 const projectRoutes = require('./routes/projectRoutes');
+
+app.use('/api/auth', authRoutes);
+app.use('/api/messages', messageRoutes); // Ensure this line is present
 app.use('/api/projects', projectRoutes);
 
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
 
 // // Socket.IO Chat
 // let adminSocketId = null;
@@ -95,9 +95,3 @@ app.use('/api/projects', projectRoutes);
 //   });
 // });
 
-
-// Start Server
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
