@@ -336,7 +336,10 @@
             <br>End: ${new Date(p.duedate).toLocaleDateString()}
             <br>Expiry: ${p.expirydate ? new Date(p.expirydate).toLocaleDateString() : 'N/A'}
             <br><button onclick="editProject('${p._id}', this)">Edit</button>
-            <br><button onclick="deleteProject('${p._id}', this)">Delete</button>
+<br><button onclick="deleteProject('${p._id}', this)">Delete</button>
+<br><button style="background-color:#2196F3;color:white;" onclick="showLogEditor('${p._id}')">Edit Project Logs</button>
+<div id="logEditor-${p._id}" style="display:none; margin-top:10px;"></div>
+
           </div>
         `).join('');
         html += `<button onclick="showProjectForm('${userId}', this)">+ Create New Project</button>
@@ -529,6 +532,126 @@
         console.error(err);
       }
     }
+
+
+    async function showLogEditor(projectId) {
+  const container = document.getElementById(`logEditor-${projectId}`);
+  if (container.style.display === 'none') {
+    const today = new Date().toISOString().split('T')[0];
+    container.style.display = 'block';
+    container.innerHTML = `
+      <label><strong>Date:</strong></label><br>
+      <input type="date" id="log-date-${projectId}" value="${today}" /><br><br>
+
+      <div id="log-entries-container-${projectId}"></div>
+
+      <div style="margin-bottom:10px;">
+  <button onclick="addLogEntry('${projectId}')">+ Add Entry</button>
+</div>
+
+
+      <button onclick="submitProjectLog('${projectId}')">Submit Log</button>
+    `;
+
+    // Load existing log (if any)
+    try {
+      const res = await fetch(`http://localhost:5000/api/project-logs/${projectId}?date=${today}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) {
+  const logData = await res.json();
+
+  // Assuming only one log document for the given project and date
+  const log = logData.entries[0]; 
+  if (log && Array.isArray(log.entries)) {
+    log.entries.forEach(entry => {
+      appendLogEntry(projectId, entry.developer, entry.hours, entry.feature);
+    });
+  } else {
+    appendLogEntry(projectId); // Fallback empty entry
+  }
+}
+
+    } catch {
+      appendLogEntry(projectId); // Fallback
+    }
+
+  } else {
+    container.style.display = 'none';
+  }
+}
+
+function appendLogEntry(projectId, developer = '', hours = '', feature = '') {
+  const container = document.getElementById(`log-entries-container-${projectId}`);
+  const entryId = `entry-${Date.now()}`;
+  const entryRow = document.createElement('div');
+  entryRow.setAttribute('id', entryId);
+  entryRow.classList.add('log-entry-row');
+
+  entryRow.style.marginBottom = '6px';
+  entryRow.innerHTML = `
+    <input type="text" placeholder="Developer" value="${developer}" style="width:30%;" />
+    <input type="number" placeholder="Hours" value="${hours}" style="width:20%;" />
+    <input type="text" placeholder="Feature" value="${feature}" style="width:45%;" />
+    <button onclick="document.getElementById('${entryId}').remove()">🗑️</button>
+  `;
+  container.appendChild(entryRow);
+}
+
+function addLogEntry(projectId) {
+  appendLogEntry(projectId);
+}
+async function submitProjectLog(projectId) {
+  const date = document.getElementById(`log-date-${projectId}`).value;
+  const container = document.getElementById(`log-entries-container-${projectId}`);
+  const entryDivs = container.querySelectorAll('.log-entry-row');
+
+
+  if (!date || entryDivs.length === 0) {
+    alert('Please enter a date and at least one log entry.');
+    return;
+  }
+
+  const entries = [];
+  for (const div of entryDivs) {
+    const inputs = div.querySelectorAll('input');
+    const developer = inputs[0].value.trim();
+    const hours = parseFloat(inputs[1].value.trim());
+    const feature = inputs[2].value.trim();
+
+    if (!developer || isNaN(hours) || !feature) {
+      alert('Please fill in all fields for each entry.');
+      return;
+    }
+
+    entries.push({ developer, hours, feature });
+  }
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/project-logs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ projectId, date, entries })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert('Project log saved successfully!');
+    } else {
+      alert(`Failed to save log: ${data.error || res.statusText}`);
+    }
+  } catch (err) {
+    console.error('Error submitting log:', err);
+    alert('Network error saving log.');
+  }
+}
+
+
+
+
 
     userSelect.addEventListener('change', async () => {
       currentUserId = userSelect.value;
