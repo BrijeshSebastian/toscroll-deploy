@@ -6,7 +6,11 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   approved: { type: Boolean, default: false },
   role: { type: String, default: 'user' },// 'admin' or 'user'
-  profileImage: { type: String, default: '' }
+  profileImage: { type: String, default: '' },
+  companyemail:{type: String,default: ''},
+  companyImage: { type: String, default: '' },
+  adress: { type: String, default: '' },
+  mobilenumber: { type: Number, default: '' },
 });
 
 module.exports = mongoose.model('User', userSchema);

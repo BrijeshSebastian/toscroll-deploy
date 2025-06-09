@@ -537,21 +537,26 @@
     async function showLogEditor(projectId) {
   const container = document.getElementById(`logEditor-${projectId}`);
   if (container.style.display === 'none') {
-    const today = new Date().toISOString().split('T')[0];
-    container.style.display = 'block';
-    container.innerHTML = `
-      <label><strong>Date:</strong></label><br>
-      <input type="date" id="log-date-${projectId}" value="${today}" /><br><br>
+const today = new Date().toISOString().split('T')[0];
+container.style.display = 'block';
+container.innerHTML = `
+  <label><strong>Date:</strong></label><br>
+  <input type="date" id="log-date-${projectId}" value="${today}" /><br><br>
+  <div id="log-entries-container-${projectId}"></div>
+  <div style="margin-bottom:10px;">
+    <button onclick="addLogEntry('${projectId}')">+ Add Entry</button>
+  </div>
+  <button onclick="submitProjectLog('${projectId}')">Submit Log</button>
+`;
 
-      <div id="log-entries-container-${projectId}"></div>
+// Load entries for the selected date (initial)
+loadLogEntriesForDate(projectId, today);
 
-      <div style="margin-bottom:10px;">
-  <button onclick="addLogEntry('${projectId}')">+ Add Entry</button>
-</div>
-
-
-      <button onclick="submitProjectLog('${projectId}')">Submit Log</button>
-    `;
+// Watch for date changes
+document.getElementById(`log-date-${projectId}`).addEventListener('change', (e) => {
+  const selectedDate = e.target.value;
+  loadLogEntriesForDate(projectId, selectedDate);
+});
 
     // Load existing log (if any)
     try {
@@ -580,6 +585,38 @@
     container.style.display = 'none';
   }
 }
+
+
+async function loadLogEntriesForDate(projectId, selectedDate) {
+  const container = document.getElementById(`log-entries-container-${projectId}`);
+  container.innerHTML = ''; // clear previous entries
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/project-logs/${projectId}?date=${selectedDate}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (res.ok) {
+      const logData = await res.json();
+      const logs = logData.entries;
+
+      if (logs.length && Array.isArray(logs[0].entries)) {
+        logs[0].entries.forEach(entry => {
+          appendLogEntry(projectId, entry.developer, entry.hours, entry.feature);
+        });
+      } else {
+        appendLogEntry(projectId); // fallback
+      }
+    } else {
+      appendLogEntry(projectId); // fallback on no data
+    }
+  } catch (err) {
+    console.error('Error loading project log for date:', err);
+    appendLogEntry(projectId); // fallback on error
+  }
+}
+
+
 
 function appendLogEntry(projectId, developer = '', hours = '', feature = '') {
   const container = document.getElementById(`log-entries-container-${projectId}`);

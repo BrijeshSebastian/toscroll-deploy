@@ -138,29 +138,39 @@ router.get('/pending', verifyToken, requireRole('admin'), async (req, res) => {
 
 
 // Admin approves a user by ID
-router.put('/approve/:id', verifyToken, requireRole('admin'), async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, { approved: true }, { new: true });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+const uploadFields = upload.fields([
+  { name: 'profileImage', maxCount: 1 },
+  { name: 'companyImage', maxCount: 1 }
+]);
 
-    res.json({ message: `${user.name} approved`, user });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Edit user details including profile image
-router.put('/edit-profile', verifyToken, upload.single('profileImage'), async (req, res) => {
+router.put('/edit-profile', verifyToken, uploadFields, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { name, email, password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      companyemail,
+      mobilenumber,
+      adress
+    } = req.body;
 
     const updates = {};
+
     if (name) updates.name = name;
     if (email) updates.email = email;
     if (password) updates.password = await bcrypt.hash(password, 10);
-    if (req.file) {
-      updates.profileImage = `/uploads/profile_photos/${req.file.filename}`;
+    if (companyemail) updates.companyemail = companyemail;
+    if (mobilenumber) updates.mobilenumber = mobilenumber;
+    if (adress) updates.adress = adress;
+
+    // Handle uploaded images
+    if (req.files?.profileImage) {
+      updates.profileImage = `/uploads/profile_photos/${req.files.profileImage[0].filename}`;
+    }
+
+    if (req.files?.companyImage) {
+      updates.companyImage = `/uploads/profile_photos/${req.files.companyImage[0].filename}`;
     }
 
     const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
@@ -175,10 +185,14 @@ router.put('/edit-profile', verifyToken, upload.single('profileImage'), async (r
         email: updatedUser.email,
         role: updatedUser.role,
         profileImage: updatedUser.profileImage || '',
-        password: '********'
+        companyImage: updatedUser.companyImage || '',
+        companyemail: updatedUser.companyemail,
+        mobilenumber: updatedUser.mobilenumber,
+        adress: updatedUser.adress,
       }
     });
   } catch (err) {
+    console.error('Edit profile error:', err);
     res.status(500).json({ error: err.message });
   }
 });

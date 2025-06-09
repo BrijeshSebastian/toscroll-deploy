@@ -44,4 +44,26 @@ router.get('/:projectId', async (req, res) => {
   }
 });
 
+// GET all dates with logs for a specific project
+router.get('/:projectId/available-dates', async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // Get all logs for the given project ID
+    const logs = await ProjectLog.find({ projectId });
+
+    // Extract only the date strings (YYYY-MM-DD)
+    const datesWithLogs = logs.map(log =>
+      log.date.toISOString().split('T')[0]
+    );
+
+    res.status(200).json({ datesWithLogs });
+  } catch (error) {
+    console.error('Error fetching available dates:', error);
+    res.status(500).json({ message: 'Server error while fetching dates' });
+  }
+});
+
+
+
 module.exports = router;
