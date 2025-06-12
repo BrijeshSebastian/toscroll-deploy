@@ -5,9 +5,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
-const projectRoutes = require('./routes/projectRoutes');
-const projectLogRoutes = require('./routes/projectLogs');
+const authRoutes = require('../routes/authRoutes');
+const projectRoutes = require('../routes/projectRoutes');
+const projectLogRoutes = require('../routes/projectLogs');
 
 dotenv.config();
 
@@ -30,7 +30,7 @@ const io = new Server(server, {
   }
 });
 
-const messageRoutes = require('./routes/messageRoutes')(io); // Pass io to messageRoutes
+const messageRoutes = require('../routes/messageRoutes')(io); // Pass io to messageRoutes
 
 app.use(express.json());
 app.use(express.static('public'));
