@@ -3,7 +3,9 @@ const router = express.Router();
 const Project = require('../models/Project');
 const { verifyToken, requireRole } = require('../middlewares/authMiddleware');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); 
+const storage = multer.memoryStorage(); // 👈 in-RAM storage
+const upload = multer({ storage });
+
 
 
 // Get projects for the logged-in user
