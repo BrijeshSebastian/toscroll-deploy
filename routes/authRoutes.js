@@ -4,15 +4,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { verifyToken, requireRole } = require('../middlewares/authMiddleware');
+const upload = require('../lib/cloudinaryStorage');
 
 const router = express.Router();
-
-const multer = require('multer');
-const path = require('path');
-
-// Set storage config
-const storage = multer.memoryStorage(); // 👈 stores file in RAM
-const upload = multer({ storage });
 
 
 // Register
@@ -169,13 +163,13 @@ router.put('/edit-profile', verifyToken, uploadFields, async (req, res) => {
     if (adress) updates.adress = adress;
 
     // Handle uploaded images
-    if (req.files?.profileImage) {
-      updates.profileImage = `/uploads/profile_photos/${req.files.profileImage[0].filename}`;
-    }
+ if (req.files?.profileImage) {
+  updates.profileImage = req.files.profileImage[0].path; // ✅ Cloudinary URL
+}
+if (req.files?.companyImage) {
+  updates.companyImage = req.files.companyImage[0].path; // ✅ Cloudinary URL
+}
 
-    if (req.files?.companyImage) {
-      updates.companyImage = `/uploads/profile_photos/${req.files.companyImage[0].filename}`;
-    }
 
     const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
 
