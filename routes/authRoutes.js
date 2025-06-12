@@ -138,6 +138,19 @@ router.get('/pending', verifyToken, requireRole('admin'), async (req, res) => {
 
 
 // Admin approves a user by ID
+router.put('/approve/:id', verifyToken, requireRole('admin'), async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, { approved: true }, { new: true });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ message: `${user.name} approved`, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 const uploadFields = upload.fields([
   { name: 'profileImage', maxCount: 1 },
   { name: 'companyImage', maxCount: 1 }

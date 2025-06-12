@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Project</title>
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-white">Add New Project</h1>
+      <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+    <div class="card">
+      <form id="projectForm" class="space-y-4">
+        <div>
+          <label for="title" class="text-white">Title</label>
+          <input type="text" id="title" class="input" placeholder="Project Title>
+        </div>
+        <div>
+          <label for="domain" class="text-white">Domain</label>
+          <input type="text" id="domain" class="input" placeholder="Project Domain">
+        </div>
+        <div>
+          <label for="startDate" class="text-white">Start Date</label>
+          <input type="date" id="startDate" class="input" required>
+        </div>
+        <div>
+          <label for="endDate" class="text-white">End Date</label>
+          <input type="date" id="endDate" class="input">
+        </div>
+        <div>
+          <label for="status" class="text-white">Status</label>
+          <select id="status" class="input">
+            <option value="active">Active</option>
+            <option value="completed">Complete</option>
+            <option value="on_hold">On Hold</option>
+          </select>
+        </div>
+        <div>
+          <label for="image" class="text-white">Project Image</label>
+          <input type="file" id="image" class="input" accept="image/*">
+        </div>
+        <button type="submit" class="btn">Create Project</button>
+      </form>
+    </div>
+  </div>
+  <script src="/components/shared.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/project-new.js"></script>
+</body>
+</html>

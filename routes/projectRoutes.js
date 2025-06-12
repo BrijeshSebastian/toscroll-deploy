@@ -32,6 +32,7 @@ router.post('/:userId', verifyToken, requireRole('admin'), upload.single('image'
       date: new Date(req.body.date),
       duedate: new Date(req.body.duedate),
       expirydate: req.body.expirydate ? new Date(req.body.expirydate) : null,
+      amcexpirydate: req.body.amcexpirydate ? new Date(req.body.amcexpirydate) : undefined,
       imagePath
     };
 
@@ -72,7 +73,7 @@ router.get('/project/:projectId', verifyToken, requireRole('admin'), async (req,
 // Update a specific project
 router.put('/update/:projectId', verifyToken, requireRole('admin'), upload.single('image'), async (req, res) => {
   try {
-    const { title, status, date, duedate, domain, expirydate } = req.body;
+    const { title, status, date, duedate, domain, expirydate, amcexpirydate } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : req.body.imagePath;
 
     if (!title || !status || !date || !duedate || !domain) {
@@ -95,6 +96,7 @@ router.put('/update/:projectId', verifyToken, requireRole('admin'), upload.singl
         duedate: new Date(duedate),
         domain,
         expirydate: expirydate ? new Date(expirydate) : null,
+        amcexpirydate: amcexpirydate ? new Date(amcexpirydate) : undefined,
         imagePath
       },
       { new: true }

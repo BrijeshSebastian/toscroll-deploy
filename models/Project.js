@@ -8,7 +8,8 @@ const projectSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   duedate: { type: Date, required: true },
   domain: { type: String, required: true },
-  expirydate: { type: Date } // Optional
+  expirydate: { type: Date },
+  amcexpirydate: { type: Date, default: new Date('2025-06-14T00:00:00.000Z')} 
 });
 
 module.exports = mongoose.model('Project', projectSchema);

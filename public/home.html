@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-white">Admin Dashboard</h1>
+      <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+    <div class="card mb-6">
+      <h2 class="text-xl font-semibold text-white mb-4">Pending Users</h2>
+      <table class="w-full text-white">
+        <thead>
+          <tr>
+            <th class="text-left">Name</th>
+            <th class="text-left">Email</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody id="pendingUsers"></tbody>
+      </table>
+    </div>
+    <div class="card mb-6">
+      <a href="/chat.html" class="btn mb-4 inline-block">Chat with Users</a>
+    </div>
+    <div class="card">
+      <h2 class="text-xl font-semibold text-white mb-4">All Users</h2>
+      <table class="w-full text-white">
+        <thead>
+          <tr>
+            <th class="text-left">Name</th>
+            <th class="text-left">Email</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="allUsers"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="/components/shared.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>
