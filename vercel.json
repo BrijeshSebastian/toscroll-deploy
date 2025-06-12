@@ -10,6 +10,7 @@
     },
     {
       "src": "/(.*)",
+      "headers": { "cache-control": "no-cache" },
       "dest": "/$1"
     }
   ]
