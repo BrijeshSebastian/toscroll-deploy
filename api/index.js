@@ -1,6 +1,6 @@
 const express = require('express');
 const http = require('http');
-const { Server } = require('socket.io');
+// const { Server } = require('socket.io');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -20,22 +20,22 @@ app.use(cors({
   credentials: true,
 }));
 
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  }
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: '*',
+//     methods: ['GET', 'POST'],
+//     credentials: true,
+//   }
+// });
 
-const messageRoutes = require('../routes/messageRoutes')(io);
+// const messageRoutes = require('../routes/messageRoutes')(io);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/toscroll-backend/public', express.static(path.join(__dirname, '../public')));
 app.use('/Uploads', express.static(path.join(__dirname, '../Uploads')));
 app.use('/api/auth', authRoutes);
-app.use('/api/messages', messageRoutes);
+// app.use('/api/messages', messageRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/project-logs', projectLogRoutes);
 
