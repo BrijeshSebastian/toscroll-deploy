@@ -24,7 +24,7 @@ app.use(cors({
 // ✅ Now socket.io uses same CORS rules
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: '*',
     methods: ['GET', 'POST'],
     credentials: true,
   }
