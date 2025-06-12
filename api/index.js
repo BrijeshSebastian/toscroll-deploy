@@ -31,7 +31,7 @@ const io = new Server(server, {
 const messageRoutes = require('../routes/messageRoutes')(io);
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use('/toscroll-backend/public', express.static(path.join(__dirname, 'public')));
 app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
 app.use('/api/auth', authRoutes);
