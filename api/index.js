@@ -1,31 +1,45 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const http = require('http');
+const { Server } = require('socket.io');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
+const mongoose = require('mongoose');
+const authRoutes = require('./routes/authRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const projectLogRoutes = require('./routes/projectLogs');
 
 dotenv.config();
+
 const app = express();
+const server = http.createServer(app);
 
-// Middleware
-app.use(express.json());
-app.use(express.static('public'));
-app.use('/Uploads', express.static(path.join(__dirname, '..', 'Uploads')));
-app.use(express.static(path.join(__dirname, '../public')));
 
-// Routes
-const authRoutes = require('../routes/authRoutes');
-const projectRoutes = require('../routes/projectRoutes');
-const projectLogRoutes = require('../routes/projectLogs');
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 
-app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectRoutes);
-app.use('/api/project-logs', projectLogRoutes);
-
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", time: new Date().toISOString() });
+// ✅ Now socket.io uses same CORS rules
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }
 });
 
+const messageRoutes = require('./routes/messageRoutes')(io); // Pass io to messageRoutes
 
+app.use(express.json());
+app.use(express.static('public'));
+app.use('/toscroll-backend/public', express.static(path.join(__dirname, 'public')));
+app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
+app.use('/api/auth', authRoutes);
+app.use('/api/messages', messageRoutes); // Ensure this line is present
+app.use('/api/projects', projectRoutes);
+app.use('/api/project-logs', projectLogRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
