@@ -210,5 +210,8 @@ router.put('/edit-profile', verifyToken, uploadFields, async (req, res) => {
   }
 });
 
+router.get('/test', (req, res) => res.send('Auth works'));
+
+
 
 module.exports = router;
