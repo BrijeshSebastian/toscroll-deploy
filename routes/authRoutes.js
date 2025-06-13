@@ -92,7 +92,8 @@ router.delete('/delete-user/:id', verifyToken, requireRole('admin'), async (req,
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     // Optional: delete related projects if Project model exists
-    await Project.deleteMany({ user: req.params.id });
+    await Project.deleteMany({ userId: req.params.id });
+
 
     res.json({ message: `${user.name} deleted successfully` });
   } catch (err) {

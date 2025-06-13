@@ -3,20 +3,21 @@ const router = express.Router();
 const Project = require('../models/Project');
 const { verifyToken, requireRole } = require('../middlewares/authMiddleware');
 const upload = require('../api/lib/cloudinaryStorage'); 
-
-
+const mongoose = require('mongoose'); // ensure mongoose is imported
 
 // Get projects for the logged-in user
 router.get('/my-projects', verifyToken, async (req, res) => {
   console.log('User ID from token:', req.user.id);
   try {
-    const userId = req.user.id; // this is correct
-    const projects = await Project.find({ userId }); // use `userId` field name as per your data
+    const userObjectId = mongoose.Types.ObjectId(req.user.id);
+    const projects = await Project.find({ userId: userObjectId });
     res.json(projects);
   } catch (err) {
+    console.error('Error fetching projects:', err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 
