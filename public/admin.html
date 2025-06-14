@@ -76,7 +76,7 @@
 
 <style>
 
-  /* Dark Glassmorphism Admin Panel CSS */
+  /* Cool & Refreshing Glassmorphism Admin Panel CSS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -87,9 +87,9 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  background: #0E1A2B;
   min-height: 100vh;
-  color: #e0e6ed;
+  color: #F1F5F9;
   line-height: 1.6;
   position: relative;
   overflow-x: hidden;
@@ -103,9 +103,9 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 40% 60%, rgba(119, 198, 255, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 20%, rgba(110, 231, 183, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(125, 211, 252, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 40% 60%, rgba(167, 139, 250, 0.08) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
 }
@@ -119,10 +119,10 @@ body > * {
 
 /* Glassmorphism card base */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
@@ -135,7 +135,7 @@ body > * {
 
 /* Headers */
 h1, h2 {
-  background: linear-gradient(135deg, #7777c6 0%, #ff77c6 50%, #77c6ff 100%);
+  background: linear-gradient(135deg, #6EE7B7 0%, #7DD3FC 50%, #A78BFA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -146,7 +146,7 @@ h1, h2 {
 
 h1 {
   font-size: clamp(2rem, 4vw, 3rem);
-  text-shadow: 0 0 30px rgba(119, 119, 198, 0.5);
+  text-shadow: 0 0 30px rgba(110, 231, 183, 0.5);
 }
 
 h2 {
@@ -156,10 +156,10 @@ h2 {
 
 /* Login form and admin panel */
 #loginForm, #adminPanel {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   padding: 32px;
   margin-bottom: 32px;
@@ -175,7 +175,7 @@ input, select, textarea {
   padding: 14px 18px;
   margin: 8px 0;
   width: 100%;
-  color: #e0e6ed;
+  color: #F1F5F9;
   font-size: 14px;
   font-family: inherit;
   transition: all 0.3s ease;
@@ -183,13 +183,13 @@ input, select, textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: rgba(119, 119, 198, 0.6);
-  box-shadow: 0 0 20px rgba(119, 119, 198, 0.2);
+  border-color: #6EE7B7;
+  box-shadow: 0 0 20px rgba(110, 231, 183, 0.3);
   background: rgba(255, 255, 255, 0.12);
 }
 
 input::placeholder {
-  color: rgba(224, 230, 237, 0.5);
+  color: #94A3B8;
 }
 
 input[type="file"] {
@@ -197,14 +197,14 @@ input[type="file"] {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Neon gradient buttons */
+/* Primary buttons */
 button {
-  background: linear-gradient(135deg, #7777c6 0%, #ff77c6 50%, #77c6ff 100%);
+  background: linear-gradient(135deg, #6EE7B7 0%, #34D399 100%);
   border: none;
   border-radius: 12px;
   padding: 14px 28px;
   margin: 8px 4px;
-  color: white;
+  color: #0E1A2B;
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
@@ -214,6 +214,7 @@ button {
   overflow: hidden;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(110, 231, 183, 0.3);
 }
 
 button::before {
@@ -223,7 +224,7 @@ button::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s;
 }
 
@@ -233,7 +234,7 @@ button:hover::before {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(119, 119, 198, 0.4);
+  box-shadow: 0 8px 25px rgba(110, 231, 183, 0.5);
   filter: brightness(1.1);
 }
 
@@ -243,38 +244,54 @@ button:active {
 
 button:disabled {
   background: rgba(255, 255, 255, 0.1);
-  color: rgba(224, 230, 237, 0.5);
+  color: #94A3B8;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-/* Special button variants */
+/* Approve button (success variant) */
 .approve-btn {
-  background: linear-gradient(135deg, #00ff87 0%, #60efff 100%);
-  box-shadow: 0 4px 15px rgba(0, 255, 135, 0.3);
+  background: linear-gradient(135deg, #34D399 0%, #6EE7B7 100%);
+  color: #0E1A2B;
+  box-shadow: 0 4px 15px rgba(52, 211, 153, 0.3);
 }
 
 .approve-btn:hover {
-  box-shadow: 0 8px 25px rgba(0, 255, 135, 0.5);
+  box-shadow: 0 8px 25px rgba(52, 211, 153, 0.5);
 }
 
+/* Delete buttons (danger variant) */
 button[onclick*="deleteUser"], button[onclick*="deleteProject"] {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  background: linear-gradient(135deg, #F87171 0%, #EF4444 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(248, 113, 113, 0.3);
 }
 
 button[onclick*="deleteUser"]:hover, button[onclick*="deleteProject"]:hover {
-  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+  box-shadow: 0 8px 25px rgba(248, 113, 113, 0.5);
 }
 
+/* Log editor buttons (secondary variant) */
 button[onclick*="showLogEditor"] {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  background: linear-gradient(135deg, #7DD3FC 0%, #3B82F6 100%);
+  color: #0E1A2B;
+  box-shadow: 0 4px 15px rgba(125, 211, 252, 0.3);
 }
 
 button[onclick*="showLogEditor"]:hover {
-  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.5);
+  box-shadow: 0 8px 25px rgba(125, 211, 252, 0.5);
+}
+
+/* Secondary buttons */
+button[onclick*="toggleProjects"], button[onclick*="editProject"], button[onclick*="showProjectForm"] {
+  background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+}
+
+button[onclick*="toggleProjects"]:hover, button[onclick*="editProject"]:hover, button[onclick*="showProjectForm"]:hover {
+  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.5);
 }
 
 /* Tables */
@@ -286,7 +303,7 @@ table {
   backdrop-filter: blur(10px);
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 th, td {
@@ -296,9 +313,9 @@ th, td {
 }
 
 th {
-  background: rgba(119, 119, 198, 0.15);
+  background: rgba(110, 231, 183, 0.1);
   font-weight: 600;
-  color: #77c6ff;
+  color: #6EE7B7;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 12px;
@@ -314,12 +331,12 @@ tr:last-child td {
 
 /* Message display */
 #message {
-  background: rgba(255, 107, 107, 0.15);
-  border: 1px solid rgba(255, 107, 107, 0.3);
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.3);
   border-radius: 12px;
   padding: 12px 18px;
   margin-bottom: 16px;
-  color: #ff6b6b;
+  color: #F87171;
   font-weight: 500;
   display: none;
 }
@@ -328,12 +345,26 @@ tr:last-child td {
   display: block;
 }
 
+/* Success messages */
+.success-message {
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #34D399;
+}
+
+/* Warning messages */
+.warning-message {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: #FBBF24;
+}
+
 /* Chat section */
 #chatSection {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 24px;
   margin-top: 32px;
 }
@@ -368,22 +399,22 @@ tr:last-child td {
 }
 
 .sent {
-  background: linear-gradient(135deg, rgba(119, 119, 198, 0.2) 0%, rgba(119, 198, 255, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(110, 231, 183, 0.2) 0%, rgba(125, 211, 252, 0.2) 100%);
   margin-left: 20%;
-  border: 1px solid rgba(119, 198, 255, 0.3);
+  border: 1px solid rgba(110, 231, 183, 0.3);
 }
 
 .received {
-  background: linear-gradient(135deg, rgba(255, 119, 198, 0.2) 0%, rgba(255, 107, 107, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(125, 211, 252, 0.2) 100%);
   margin-right: 20%;
-  border: 1px solid rgba(255, 119, 198, 0.3);
+  border: 1px solid rgba(167, 139, 250, 0.3);
 }
 
 /* User sections */
 #allUsersSection > div {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 20px;
   margin: 16px 0;
@@ -393,7 +424,7 @@ tr:last-child td {
 #allUsersSection > div:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(110, 231, 183, 0.3);
 }
 
 /* Project containers */
@@ -408,7 +439,7 @@ div[id^="projects-"] > div {
 
 div[id^="projects-"] > div:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(125, 211, 252, 0.3);
 }
 
 /* Form containers */
@@ -440,12 +471,13 @@ div[id^="projectForm-"], div[id^="logEditor-"] {
   padding: 8px 12px;
   font-size: 16px;
   min-width: auto;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  background: linear-gradient(135deg, #F87171 0%, #EF4444 100%);
+  color: white;
 }
 
 /* Labels */
 label {
-  color: #77c6ff;
+  color: #7DD3FC;
   font-weight: 500;
   margin-bottom: 4px;
   display: inline-block;
@@ -458,7 +490,7 @@ label {
 hr {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(110, 231, 183, 0.3), transparent);
   margin: 40px 0;
 }
 
@@ -479,12 +511,12 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #7777c6 0%, #ff77c6 100%);
+  background: linear-gradient(135deg, #6EE7B7 0%, #7DD3FC 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #8888d7 0%, #ff88d7 100%);
+  background: linear-gradient(135deg, #34D399 0%, #3B82F6 100%);
 }
 
 /* Responsive design */
@@ -586,7 +618,7 @@ button:disabled::after {
   height: 16px;
   margin: -8px 0 0 -8px;
   border: 2px solid transparent;
-  border-top-color: rgba(255, 255, 255, 0.6);
+  border-top-color: rgba(110, 231, 183, 0.6);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -599,14 +631,14 @@ button:disabled::after {
 
 /* Focus indicators for accessibility */
 *:focus-visible {
-  outline: 2px solid #77c6ff;
+  outline: 2px solid #6EE7B7;
   outline-offset: 2px;
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(119, 198, 255, 0.3);
-  color: white;
+  background: rgba(110, 231, 183, 0.3);
+  color: #F1F5F9;
 }
 </style>
 
