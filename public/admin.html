@@ -1055,8 +1055,8 @@ button:disabled::after {
             <option value="Completed" ${p.status === 'Completed' ? 'selected' : ''}>Completed</option>
           </select><br>
           <label for="edit-imagePath-${projectId}">Project Image (leave empty to keep current):</label><br>
-          ${p.imagePath ? `<img src="https://toscroll.vercel.app
-${p.imagePath}" alt="${p.title}" style="max-width:100px;" /><br>` : ''}
+          ${p.imagePath ? `<img src="${formatImageUrl(p.imagePath)}" alt="${p.title}" style="max-width:100px;" />
+<br>` : ''}
           <input type="file" id="edit-imagePath-${projectId}" accept="image/*" /><br>
           <button onclick="saveProject('${projectId}')">Save</button>
         `;
@@ -1065,6 +1065,13 @@ ${p.imagePath}" alt="${p.title}" style="max-width:100px;" /><br>` : ''}
         projectDiv.innerHTML = `Failed to load project: ${err.message}`;
       }
     }
+
+    
+function formatImageUrl(imagePath) {
+  if (!imagePath) return '';
+  if (imagePath.startsWith('http')) return imagePath;
+  return `https://toscroll.vercel.app${imagePath}`;
+}
 
     async function saveProject(projectId) {
       const title = document.getElementById(`edit-title-${projectId}`).value.trim();
