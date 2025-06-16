@@ -41,7 +41,6 @@ app.use('/api/project-logs', projectLogRoutes);
 
 mongoose.connect(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 10000,
-  bufferCommands: false,
 })
   .then(() => console.log('✅ MongoDB connected successfully'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
