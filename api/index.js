@@ -39,25 +39,16 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/project-logs', projectLogRoutes);
 
+mongoose.connect(process.env.MONGODB_URI, {
+  serverSelectionTimeoutMS: 10000,
+  bufferCommands: false,
+})
+  .then(() => console.log('✅ MongoDB connected successfully'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('⚠️ MongoDB disconnected');
+});
 
 
-
-async function startServer() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 10000,
-      bufferCommands: false,
-    });
-
-    console.log('✅ MongoDB connected successfully');
-
-    // Only after DB connects, export the app
-    module.exports = app;
-
-  } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1); // Exit process if DB connection fails
-  }
-}
-
-startServer();
+module.exports = app;
